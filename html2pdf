@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Check if wkhtmltopdf is installed
+if ! command -v wkhtmltopdf &> /dev/null
+then
+    echo "wkhtmltopdf is not installed. Please install it first."
+    exit
+fi
+
+# Check if directory is provided as an argument
+if [ $# -lt 1 ]
+then
+    echo "Usage: $0 <directory_path>"
+    exit
+fi
+
+# Set the directory path
+dir_path="$1"
+
+# Check if the directory exists
+if [ ! -d "$dir_path" ]
+then
+    echo "Directory $dir_path does not exist."
+    exit
+fi
+
+# Convert HTML files to PDF
+for html_file in "$dir_path"/*.html
+do
+    pdf_file="${html_file%.*}.pdf"
+    wkhtmltopdf "$html_file" "$pdf_file"
+    if [ $? -eq 0 ]
+    then
+        echo "Conversion of $html_file completed successfully."
+    else
+        echo "Conversion of $html_file failed."
+    fi
+done
+
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "find . -type f -name '*.py' -exec sed -i '1s/^/#!\/usr\/bin\/env python3\n/' {} \;";
+
+find . -type f -name '*.py' -exec sed -i '1s/^/#!\/usr\/bin\/env python3\n/' {} \;

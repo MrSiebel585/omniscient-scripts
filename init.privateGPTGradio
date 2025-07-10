@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Logging setup
+LOG_FILE="/var/log/syslog"
+exec > >(tee -a ${LOG_FILE}) 2>&1
+
+echo "Starting PrivateGPT installation script..."
+
+# Function to check if command exists
+command_exists() {
+  command -v "$@" >/dev/null 2>&1
+}
+
+# Update and Install dependencies
+echo "Updating package list and installing base dependencies..."
+sudo apt-get update && sudo apt-get install -y curl build-essential libssl-dev libreadline-dev zlib1g-dev
+
+# Clone PrivateGPT repo
+echo "Cloning PrivateGPT repository..."
+git clone https://github.com/imartinez/privateGPT
+cd privateGPT
+
+# Install Python 3.11 using pyenv
+if command_exists pyenv; then
+  echo "pyenv exists, proceeding to install Python 3.11..."
+else
+  echo "Installing pyenv..."
+  curl https://pyenv.run | bash
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+pyenv install 3.11
+pyenv local 3.11
+
+# Install Poetry
+echo "Installing Poetry for dependency management..."
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+
+# Ensure Poetry is in PATH
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# Install make
+echo "Installing make..."
+sudo apt-get install -y make
+
+# Install and configure selected modules
+read -p "Enter extras for installation (ui llms-ollama embeddings-ollama vector-stores-qdrant): " EXTRAS
+poetry install --extras "$EXTRAS"
+
+# Log installation details
+echo "PrivateGPT installation completed with extras: $EXTRAS" | sudo tee -a $LOG_FILE
+
+echo "Installation script finished. Review $LOG_FILE for details."

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Directories to calculate total size for
+directories="/usr/local/bin /home/jeremy /opt /var/www/html"
+
+# Calculate total size of directories
+total_size=$(du -csh $directories | tail -n 1 | awk '{print $1}')
+
+# Convert total size to gigabytes
+total_size_gb=$(echo "scale=2; $total_size/1024/1024" | bc)
+
+# Print the result
+echo "Total size: $total_size_gb GB"
+

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+echo "Starting microphone headset diagnosis and reconfiguration..."
+
+# Step 1: Check if the microphone headset is connected
+echo "Checking if the microphone headset is connected..."
+if ! lsusb | grep -q "Your_Microphone_Headset_Vendor_ID"; then
+  echo "Microphone headset not found. Please make sure it is connected."
+  exit 1
+fi
+
+# Step 2: Check the audio input devices
+echo "Checking available audio input devices..."
+arecord -l
+
+# Step 3: Test the microphone
+echo "Testing the microphone..."
+echo "Please speak into the microphone for a few seconds..."
+arecord -d 5 test.wav
+
+# Step 4: Play back the recorded audio
+echo "Playing back the recorded audio..."
+aplay test.wav
+
+# Step 5: Ask user if the microphone is working properly
+read -p "Did you hear your voice in the playback? (y/n): " response
+if [[ $response != "y" ]]; then
+  echo "Microphone configuration failed. Please check your headset and audio settings."
+  exit 1
+fi
+
+# Step 6: Reconfigure the microphone settings (Placeholder)
+echo "Reconfiguring microphone settings..."
+# Add commands here to reconfigure the microphone, e.g., using amixer or pactl
+# Example: amixer set 'Microphone' 80%
+
+# Check if reconfiguration was successful
+if [ $? -ne 0 ]; then
+  echo "Failed to reconfigure microphone settings."
+  exit 1
+fi
+
+echo "Microphone headset diagnosis and reconfiguration completed successfully."
+exit 0
+

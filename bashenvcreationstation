@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Bash Script to Create an .env File
+
+# Define the path for the .env file
+ENV_FILE="./.env"
+
+# Check if the .env file already exists
+if [[ -f "$ENV_FILE" ]]; then
+    echo ".env file already exists."
+    exit 1
+fi
+
+# Create a new .env file and set permissions
+touch "$ENV_FILE"
+chmod 600 "$ENV_FILE"
+
+# Function to append environment variables to the file
+add_env_var() {
+    echo "$1='$2'" >> "$ENV_FILE"
+}
+
+# Adding environment variables
+# Syntax: add_env_var VARIABLE_NAME VALUE
+add_env_var "DB_USERNAME" "user123"
+add_env_var "DB_PASSWORD" "pass123"
+add_env_var "API_KEY" "your_api_key_here"
+
+echo ".env file created successfully."

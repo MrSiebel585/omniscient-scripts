@@ -1,0 +1,4 @@
+setfacl -d --set u::r-x,g::r-x,o::- /opt/omniscient
+
+
+This ensures that once written, files are read-only but can be deleted by the owner and not others.

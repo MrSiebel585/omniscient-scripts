@@ -1,0 +1,4 @@
+#!/bin/bash
+
+read -p "Check Disk " dsk
+e2fsck -f -y -v -C 0 /dev/$dsk

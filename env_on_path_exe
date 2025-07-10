@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Specify the directory paths
+directory_paths=(~/bin/adb /usr/local/bin /opt/myapp)
+
+# Iterate over each directory path
+for directory_path in "${directory_paths[@]}"; do
+    # Check if the directory exists
+    if [ -d "$directory_path" ]; then
+        # Check if the directory is already executable
+        if [ -x "$directory_path" ]; then
+            echo "Directory $directory_path is already executable."
+        else
+            # Make the directory executable
+            chmod +x "$directory_path"
+            echo "Directory $directory_path is now executable."
+        fi
+        
+        # Check if the PATH already contains the directory
+        if [[ ":$PATH:" == *":$directory_path:"* ]]; then
+            echo "The directory is already in your PATH."
+        else
+            # Add the directory to the PATH and update the shell configuration
+            echo "export PATH=\"$directory_path:\$PATH\"" >> ~/.bashrc  # Use ~/.bash_profile for macOS
+            source ~/.bashrc  # Use source ~/.bash_profile for macOS
+            echo "Directory $directory_path has been added to your PATH."
+        fi
+    else
+        echo "Directory $directory_path does not exist."
+    fi
+done
+

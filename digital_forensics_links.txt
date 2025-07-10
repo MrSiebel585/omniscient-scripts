@@ -1,0 +1,16 @@
+PMI Dashboard Main Links
+
+https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/linux-forensics
+https://networkdefensesolutions.com/index.php/all-articles/forensics/nix-forensics/318-linux-forensics-incident-response-introduction
+https://www.blackhat.com/presentations/bh-usa-03/bh-us-03-willis-c/bh-us-03-willis.pdf
+
+https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/linux-forensics
+
+https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/image-acquisition-and-mount
+https://book.hacktricks.xyz/generic-methodologies-and-resources/brute-force
+https://book.hacktricks.xyz/generic-methodologies-and-resources/exfiltration
+https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/image-acquisition-and-mount
+https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/malware-analysis
+https://book.hacktricks.xyz/generic-methodologies-and-resources/phishing-methodology
+https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology
+https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-methodology

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /opt/omniscient;
+source omniscient/bin/activate
+echo "enter:> deactivate to exit"; echo
+
+echo "(omniscient) jeremy@omniscient:/opt/omniscient/omni_hub = IF_NEWLINE IS equal To"
+

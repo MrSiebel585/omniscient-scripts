@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Function to monitor disk usage and log results
+monitor_disk_usage() {
+    log_file="disk_usage.log"
+
+    while true; do
+        df -h / >> "$log_file"  # Append disk usage info to log file
+        sleep 1  # Wait for 1 second before next check
+    done
+}
+
+# Call the function to start monitoring disk usage
+monitor_disk_usage

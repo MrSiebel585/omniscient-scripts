@@ -1,0 +1,1 @@
+import requests; from bs4 import BeautifulSoup; def dfir_crawler(): url = 'https://www.google.com/search?q=dfir'; response = requests.get(url); soup = BeautifulSoup(response.text, 'html.parser'); results = soup.find_all('div', {'class': 'ZINbbc xpd O9g5cc uUPGi'}); for result in results: print(result.text); dfir_crawler()

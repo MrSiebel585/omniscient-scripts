@@ -1,0 +1,1443 @@
+
+#colors 
+END="\e[1m"
+Red="\e[31m"
+GREEN="\e[32m"
+BOLDGREEN="\e[1;${GREEN}"
+YELLOW="\033[0;33m"
+Cyan="\e[0;36m"
+white="\e[0;37m"
+#check you are root or not
+if [ $EUID -ne 0 ]
+  then echo -e "${Red}Please run as a root${END}"
+  exit
+fi
+#banner for Script to look cool
+
+echo -e "
+${Red}
+ █████╗ ██████╗ ███████╗███████╗███╗   ██╗ █████╗ ██╗
+██╔══██╗██╔══██╗██╔════╝██╔════╝████╗  ██║██╔══██╗██║
+███████║██████╔╝███████╗█████╗  ██╔██╗ ██║███████║██║
+██╔══██║██╔══██╗╚════██║██╔══╝  ██║╚██╗██║██╔══██║██║
+██║  ██║██║  ██║███████║███████╗██║ ╚████║██║  ██║███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝ v2
+                                 
+IS NOW EXECUTING FOR OMNISCIENT INITIALIZATION AND IMPLEMENTAITON...
+
+# creat a dir to your arsenal
+mkdir arsenal &> /dev/null
+cd Arsenal 
+echo "Check the requirements"
+sleep 2s"
+
+
+text="This is a typewriter effect in the Linux shell."
+delay=0.05  # Typing speed (adjust as needed)
+cursor="_"
+
+#for ((i=0; i<${#text}; i++)); do
+#    printf "%s" "${text:i:1}"
+#    sleep $delay
+#done
+
+# Print a newline character and the final cursor
+echo -e "\n$cursor"
+
+source omni_env; echo "Setting Global Omniscient Environment..."
+
+# OMNISCIENT MASTER CONFIGURATION FILE
+source /etc/omniscient.conf
+
+source .bash_aliases 
+
+#source .bashrc
+#source .bashrc_connectors
+#source .bashrc_functions 
+
+# Swirl Ai Open Source Search
+# source init.swirl-ai-search-engine.sh
+
+# source bootstrap.sh   # my bootstrap packages - fnish before enable
+source lamp_installation; echo "Starting LAMP Implementation"
+source init.vscode; echo "Implement VSCode microsoft External Repository"
+
+# source infrastructure_framework - # has config file, must properly be implemented with env vars and possible configs
+
+#soruce init.bashly_groundwork       # must be tested in virtual machine environement
+
+# source omniscient_agent_frameworks # Specifically installs langchain Langflow Floweise Independantly
+
+source gitlistfromastergithub
+
+source repositories
+source operations-packages.list; echo "source operations... referenced in bashgodmode"
+source init.tui_cli; echo "Implementing Terminal User Interfaces To ShellInABox Packages"
+source omniscient_agent_frameworks; echo "Implementing Langchain, LangFlow, Flowise" 
+source init.vllm.sh; echo "Implementing VLLM Language model ai"
+source webmin-master-installer; echo "Webmin master Installer"
+
+source forpipinstalls
+
+source foreachinstallmklog
+
+# FULL APT INSTALL LIST INSTALLER
+# bash apt_installer_repo.sh
+
+git clone https://github.com/JeremyEngram/bashrc.git; mv /tmp/bashrc/* $HOMEDIR
+git clone https://github.com/JeremyEngram/aliasmaster/ /tmp; mv /tmp/aliasmaster/* $HOMEDIR 
+
+
+
+alias arm='sudo chmod +x'
+alias url2pdf='wkhtmltopdf'
+alias implement='sudo apt install -y'
+alias blowoff='sudo apt autoremove'
+alias dropoff='sudo apt remove'
+alias truncatelogs='sudo truncate -s 0 /var/log/syslog'
+alias nmapme='sudo nmap -sS localhost'
+alias mobileforensics='androtree && andriller'
+alias scriptman='python3 /usr/local/bin/ScriptMan.py'
+alias gpt4all='/home/csi/gpt4all/bin/chat'
+alias webmin='xdg-open https://csi.lan:10000'
+
+alias interpreter='nexusshell'
+
+
+
+# AI model commands make documentation 
+AiCMDS="embedchain, ollama run gpt4all.bin , llm model.bin , privateCLI , vllm"
+AICMDS="sgpt bashgpt gorilla llm ollamma gpt4all-cli"
+
+
+DOCUENTATION="/path/to/online/help/documentation"
+SITES_DB="https://docs.google.com/spreadsheets/d/1E43Fnox6xG-dt7RsiLZp4tVvLyWASm2jy8wrlHBdBRI/edit?pli=1#gid=1539931065"
+
+
+
+
+prtint "EXECUTE VIRTUAL ENVIRONENT"; echo 
+
+echo "python3 -m venv env"
+echo "source env/bin/activate"
+
+
+function virtual_environments() {
+echo "Creating Virtual Environments From Git Installed Repos And README Files.." echo 
+
+# Create a virtual environment
+python3 -m venv $INSTALL_DIR/venv
+
+# Activate the virtual environment
+source $INSTALL_DIR/venv/bin/activate
+
+# Clone the GitHub repository to the installation directory
+git clone $GITHUB_REPO_URL $INSTALL_DIR
+
+# Navigate to the repository directory
+cd $INSTALL_DIR
+
+# Install Python dependencies using pip
+pip install -r requirements.txt
+
+# Run the setup.py file if it exists
+if [ -f setup.py ]; then
+    python setup.py install
+fi
+
+}
+
+
+# Check for a README file and display install instructions if available
+echo "Check For any and all possible install instructions for git repos..."
+if [ -f README ]; then
+    grep -i "install" README | tee -a README_Master.md | pandoc README_Master.html
+else
+    echo "No README file found."
+fi
+
+
+
+
+
+echo "Please be cautious when using this approach as it can execute arbitrary commands, and the content of a README may not always be safe. Additionally, README files vary widely in format and content, so this approach might not work for all cases. Ensure you trust the source of the README and validate the commands before running them in a production environment."
+
+# Prompt the user with "Y/n" to confirm
+read -p "Do you want to install commands from the README? (Y/n): " choice
+
+# Check the user's choice
+if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
+    # Check for a README file
+    if [ -f README ]; then
+        # Look for lines containing the word "install" and execute the commands
+        while IFS= read -r line; do
+            if [[ "$line" == *install* ]]; then
+                # Extract the install command and execute it
+                install_command=$(echo "$line" | sed 's/.*install//')
+                eval "$install_command"
+            fi
+        done < README
+    else
+        echo "No README file found."
+    fi
+else
+    echo "Installation cancelled. Continuing with the next script."
+fi
+
+
+
+
+
+function ai_frameworks() {
+    wget --show-progress -o /dev/null -O- 'https://raw.githubusercontent.com/hyperupcall/autoenv/master/scripts/install.sh' | sh
+    wget -qO - https://raw.githubusercontent.com/shinokada/awesome/main/install | bash -s install
+    echo "export PATH=$HOME/.local/share/bin:$PATH" >> .bashrc 
+
+
+    echo "GPT4ALL Installer"; echo
+    sudo apt install libxcb-xinerama0 libxcb-cursor0 # required for gpt4all installer to work
+    wget https://gpt4all.io/installers/gpt4all-installer-linux.run && sudo chmod +x *.run
+    sudo ./gpt4all*-linux.run
+
+
+    echo "PrivateGPT Installer"
+    # Private Flatfoot AI Research Assistant
+    git clone https://github.com/JeremyEngram/PrivateGPT4Linux.git
+   
+    curl -LO "https://raw.githubusercontent.com/MichaelSebero/PrivateGPT4Linux/main/installer.sh"
+    sh installer.sh
+
+    cd /home/$(whoami)/privateGPT && python3 privateGPT.py
+
+    privateclimenu # add to /usr/local/bin
+
+}
+
+
+function docker_frameworks() {
+    echo "Docker Installers"
+    # Omniscient Main infrastructure
+    git clone https://github.com/JeremyEngram/docker-installers.git $HOME/dockers
+    cd $HOME/dockers
+    sudo chmod +x *
+    sudo ./portainer
+    sudo ./elasticsearch
+    sudo ./shellinabox
+
+
+# standalone shellinaboxd
+# heimdall ?
+
+echo "Standalone Elasticsearch Docker"
+    # Standalone DFIR Elasticsearch Installer - Standalone APT insttaller seemed to have work and be stable Ubuntu 22.4
+    docker network create elastic
+    docker pull docker.elastic.co/elasticsearch/elasticsearch:8.10.1
+    docker run -d --name es01 --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.10.1
+    docker pull docker.elastic.co/kibana/kibana:8.10.1
+    docker run -d --name kib01 --net elastic -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://es01:9200" docker.elastic.co/kibana/kibana:8.10.1
+
+echo -e "This script creates a new Docker network called  elastic  and runs Elasticsearch and Kibana in separate Docker containers. Elasticsearch is configured to run as a single-node cluster, and Kibana is configured to connect to Elasticsearch at http://es01:9200. The script exposes Elasticsearch on port 9200 and Kibana on port 5601."
+
+}
+
+
+function frontend_modules() {
+    # nodejs javascript modules 
+    npm install browserify
+    npm install webpack
+    npm install webapp-manager
+    npm install webify
+
+}
+
+
+function makevenv() {
+    python -m venv langchain  # Create a virtual environment
+    source lanchain/bin/activate  # Activate the virtual environment
+    pip install langchain
+
+    python -m venv langflow # Create a virtual environment
+    source langflow/bin/activate  # Activate the virtual environment
+    pip install langflow
+
+    python -m venv flowise  # Create a virtual environment
+    source flowise/bin/activate  # Activate the virtual environment
+    pip install flowise
+
+
+   #python -m venv langchain  # Create a virtual environment
+   #source lanchain/bin/activate  # Activate the virtual environment
+   #pip install langchain
+} 
+
+
+
+
+function python_backends() {
+echo "Executing Python Backebd Modules Installation"; echo
+
+pip install --upgrade pip
+
+cat omniscient_python_requirements.txt
+pip freeze >> omniscient_python_requirements.txt
+cat omniscient_python_requirements.txt
+
+# python modules for integration
+
+  pip install pyscript
+  pip install pyscripter
+  pip install pyodide
+  pip install brython
+  pip install flask 
+
+pip install gorilla-cli 
+
+pip install requests
+pip install beautifulsoup
+pip install selenium
+
+}
+
+echo "Running Python Pip Requirements..."
+python_backends
+
+
+
+
+function agents_infrastructure() {
+# AI Agent Infrastructure 
+git clone https://github.com/boxyhq/jackson # SAAS API to tie multiple services into one system
+git clone https://github.com/swirlai/swirl-search /var/www/html/swirl # Open source AI based search engine
+
+git clone https://github.com/JeremyEngram/autogpt-gui
+git clone https://github.com/JeremyEngram/chatgpt-linux-assistant
+git clone https://github.com/JeremyEngram/AutoLearn-GPT
+git clone https://github.com/JeremyEngram/embedchain
+git clone https://github.com/JeremyEngram/auto-gpt-web
+
+}
+
+
+functions requirements(){
+  ## check go 
+  go_v=$(go version) &> /dev/null
+  if ! command -v go &> /dev/null
+  then
+    echo "go is not installed"
+    echo "installing go now to be implemented for mainsystem dependencies "
+    # echo "Check this "
+    # echo "https://github.com/Micro0x00/Arsenal/blob/main/README.md#go-lang-installation"
+    sudo apt-get remove -y golang-go &>/dev/null
+    sudo rm -rf /usr/local/go &>/dev/null
+    wget https://go.dev/dl/go1.20.1.linux-amd64.tar.gz &>/dev/null
+    sudo tar -xvf go1.20.1.linux-amd64.tar.gz &>/dev/null
+    sudo mv go /usr/local
+    #  sudo echo "export GOPATH=$HOME/go" >> /etc/profile
+    #  sudo echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile
+    #  sudo echo "export PATH=$PATH:$GOPATH/bin" >> /etc/profile
+    awk 'BEGIN { print "export GOPATH=$HOME/go" >> "/etc/profile" }'
+    awk 'BEGIN { print "export PATH=$PATH:/usr/local/go/bin" >> "/etc/profile" }'
+    awk 'BEGIN { print " export PATH=$PATH:$GOPATH/bin" >> "/etc/profile" }'
+    source /etc/profile #to update you shell dont worry
+
+  else
+    echo -e "${Cyan}Go is already installed and your version is: ${go_v:13}${END}"
+  fi
+  if ! command -v go &> /dev/null
+   then
+    echo "If you get this massege do this commanad source /etc/profile because you need to update your shell and run again #golang is installed have a good day !"
+
+  echo "Configuring System Aliases For .bashrc";
+    echo "alias arm='sudo chmod +x'" >> .bashrc 
+#   echo "alias " >> .bashrc
+#   echo "alias " >> .bashrc
+    source .bashrc 
+    exit
+  fi
+sudo apt-get install build-essential -y &> /dev/null # for azure
+#version
+git_v=$(git --version) &> /dev/null
+py_v=$(python3 --version) &> /dev/null
+ruby_v=$(ruby -v) &> /dev/null
+rust_v=$(rustc --version) &> /dev/null
+
+# Check For The requirements
+if ! command -v git &> /dev/null
+then
+    echo "Git is not installed, we will install it for you now"
+    echo "Installing Git"
+    apt-get install git -y &> /dev/null
+    if command -v git &> /dev/null
+    then
+        echo "git has been installed for secondary system operations..."
+    fi
+else
+    echo -e "${BOLDGREEN}Git is already installed and your version is:${git_v:11}${END}"
+fi
+if ! command -v ruby -v &> /dev/null
+then
+    echo "ruby is not installed we will installed it for you now "
+    echo "Installing ruby"
+    apt-get install ruby-full -y
+    if command -v ruby -v &> /dev/null
+    then
+        echo "Ruby has been installed... Verify use of ruby as needed by system?"
+    fi
+else
+    echo -e "${Red}Ruby is already installed and your version is: ${ruby_v:5:5}${END}"
+fi
+if ! command -v  rustc --version  &> /dev/null
+then
+    echo "rust is required for operative_framework in mainsystem... "
+    echo "Installing rust"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &> /dev/null
+    if command -v rustc --version &> /dev/null
+    then
+        echo "Rust has been implemented!"
+    fi
+else
+    echo -e "${white}Rust is already install and your version is: ${rust_v:5:8}${END}"
+fi
+if ! command -v python3 &> /dev/null
+then
+    echo "python3 is not installed we will installed it for you now "
+    apt-get install python3 -y &> /dev/null
+    apt install python3-pip -y &> /dev/null
+    if command -v python3 &> /dev/null
+    then
+        echo "Implement restore-backup of supporting pip packages so that all scripts will execute out of the box!";
+        echo "DONE -> implementing Python3 as the primary supporting script framework."
+    fi
+else
+    echo -e "${YELLOW}Python is already install and your version is :${py_v:6}${END}"
+fi
+
+if ! command -v apache2 -v &> /dev/null
+then
+    echo "apache lamp is not installed we will installed it for you now "
+    echo "Installing apache"
+    apt-get install apache-full -y
+    if command -v ruby -v &> /dev/null
+    then
+        echo "Apache has been installed... Verify use of apache as needed by system?"
+    fi
+else
+    echo -e "${Red}Apache is already installed and your version is: ${ruby_v:5:5}${END}"
+fi
+
+if ! command -v php -v &> /dev/null
+then
+    echo "php is not installed we will installed it for you now "
+    echo "Installing php"
+    apt-get install php-full -y
+    if command -v php -v &> /dev/null
+    then
+        echo "php has been installed... Verify use of ruby as needed by system?"
+    fi
+else
+    echo -e "${Red}php is already installed and your version is: ${ruby_v:5:5}${END}"
+fi
+
+echo "IMPLEMENTED RUBY PYTHON APACHE2 PHP"
+
+
+sleep 10; echo "sleeping for 10 minutes..."
+
+
+
+function opt_warning() {
+    echo "IF PHP IMPLEMENTATION ERRORS STILL EXIST THEN RUN THE FOLLOWING"
+    echo "sudo apt install software-properties-common"
+    echo "sudo add-apt-repository ppa:ondrej/php"
+    echo "sudo apt update"
+    echo "sudo apt install php8.0 libapache2-mod-php8.0"
+    echo "sudo systemctl restart apache2"
+    echo
+    echo "Configure Apache with PHP-FPM"
+    echo "Php-FPM is a FastCGI process manager for PHP. Run the following command to install the necessary packages:"
+    echo
+    echo "sudo apt update"
+    echo "sudo apt install php8.0-fpm libapache2-mod-fcgid"
+    echo "sudo a2enmod proxy_fcgi setenvif"
+    echo "sudo a2enconf php8.0-fpm"
+    echo "systemctl restart apache2"
+}
+
+function install_php() {
+   sudo apt install software-properties-common
+   sudo add-apt-repository ppa:ondrej/php
+   sudo apt update
+   sudo apt install php8.0 libapache2-mod-php8.0
+   sudo systemctl restart apache2
+
+# Configure Apache with PHP-FPM
+# Php-FPM is a FastCGI process manager for PHP. Run the following command to install the necessary packages:
+   sudo apt update
+   sudo apt install php8.0-fpm libapache2-mod-fcgid
+   sudo a2enmod proxy_fcgi setenvif
+   sudo a2enconf php8.0-fpm
+   systemctl restart apache2
+}
+
+# Prompt the user to press Enter to continue or 'N' to skip installation
+read -p "Press Enter to continue with PHP installation, or 'N' to skip: " input
+
+if [ "$input" == "" ]; then
+    echo "Continuing with PHP8+ implementation..."
+    install_php
+else
+    echo "Skipping PHP installation. Continuing with the rest of the script..."
+    echo "Implementing MySQL Database Dependency" 
+    sudo apt install mariadb-server
+    mysql_secure_installation
+    
+    source lamp_implementation; echo "sourcing file for lamp implementation testing..."
+    
+    systemctl restart apache2
+    systemctl status apache2
+fi
+echo
+echo "Done implemnting php8.0+ and restarting apache... php_exec script exeution should be viaable"
+echo
+
+
+
+
+
+
+function frameworks() {
+
+# official omniscient llm model implementation 
+
+# elasticsearch OFFIICAL WORKING!
+  sudo curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - && sudo add-apt-repository "deb https://artifacts.elastic.co/packages/7.x/apt stable main" && sudo apt-get update && sudo apt-get install elasticsea
+rch=7.6.2
+# swirl ai search
+# Ebmbedded ai implementation 
+#
+# Scraping Frameworks
+
+# MUST BE TEMPORARILOY INSTALLED WITH README RAN THROUGH GPT OR CODELLAMMA FOR PROPER INSTALL AND IMPLEMENT 
+  #git clone https://github.com/wagoodman/bashful
+  #git clone https://github.com/DannyBen/bashly
+  #git clone https://github.com/soxoj/maigret
+
+echo "Mainframe Infrastureure Framework Implemented"; echo 
+}
+
+
+
+
+echo "==================================================="
+echo "PREMEPTIVE INITIALIZATION OF DEPENDENCIES COMPLETE!"
+echo "==================================================="
+
+
+
+
+
+echo 
+
+
+
+
+
+echo "==================================================="
+echo " INSTALLING OPERATIONS TOOLS FROM GITHUB INTO /OPT "
+echo "==================================================="
+
+function optional_tools(){
+    # echo "Check if httpx installed or not"
+    if ! command -v httpx -h &> /dev/null
+        then
+        echo "installing httpx now"
+        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest &> /dev/null
+        echo "httpx has been installed "
+        
+
+
+    else
+        echo "httpx is already installed"
+fi
+    # echo "Check if httprobe installed or not"
+if ! command -v httprobe &> /dev/null
+    then
+    echo "installing httprobe now "
+    go install github.com/tomnomnom/httprobe@latest
+    sudo cp $HOME/go/bin/httprobe /usr/local/bin
+    echo "httprobe has been installed"
+
+    else
+    echo "httprobe is already installed"
+
+    fi
+
+  if ! command -v amass &> /dev/null
+    then
+    echo "Installing amass now "
+    go install -v github.com/OWASP/Amass/v3/...@master &> /dev/null
+    sudo cp $HOME/go/bin/amass /usr/local/bin
+    echo "amass has been installed"
+else
+   echo "amass is already installed"
+
+    fi
+ if ! command -v gobuster &> /dev/null
+    then
+    echo "Installing gobuster now "
+    go install github.com/OJ/gobuster/v3@latest &> /dev/null
+
+    sudo cp $HOME/go/bin/gobuster /usr/local/bin
+    echo "GoBuster has been installed"
+
+    else
+    echo "Gobuster is already installed"
+
+ fi
+ if ! command -v nuclei &> /dev/null
+ then
+    echo "Installing nuclei now "
+    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest &> /dev/null
+    sudo cp $HOME/go/bin/nuclei /usr/local/bin
+    echo "nuclei installation is done"
+
+    else
+       echo "nuclei is already installed"
+
+
+   fi
+
+ if ! command -v subfinder &> /dev/null
+then
+        echo "Installing subfinder now "
+        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest &> /dev/null
+        sudo cp $HOME/go/bin/subfinder /usr/local/bin
+        echo "subfinder installation is done"  
+
+    else
+    echo "subfinder is already installed"
+fi
+    if ! command -v assetfinder &> /dev/null
+then
+
+        echo "installing assetfinder now "
+        go install github.com/tomnomnom/assetfinder@latest &> /dev/null
+        echo "assetfinder has been installed "
+
+     
+
+    else
+        echo "assetfinder is installed"
+
+
+fi
+    if ! command -v ffuf &> /dev/null
+then
+        echo "Installing ffuf now "
+        go install github.com/ffuf/ffuf@latest
+        cp $HOME/go/bin/ffuf /usr/local/bin
+        echo "ffuf has been installed "
+
+
+    else
+        echo "ffuf is already installed"
+
+
+fi
+if ! command -v gf &> /dev/null
+then
+        echo "installing gf now "
+        go install github.com/tomnomnom/gf@latest &> /dev/null
+        cp $HOME/go/bin/gf /usr/local/bin
+        echo "gf has been installed"
+    else
+        echo "gf is already installed"
+
+
+fi
+ if ! command -v meg &> /dev/null
+then
+        echo "Instaliing meg now "
+        go install github.com/tomnomnom/meg@latest &> /dev/null
+        cp $HOME/go/bin/meg /usr/local/bin
+        echo "meg has been installed"
+
+
+    else
+        echo "meg is already installed"
+
+
+fi
+if ! command -v waybackurls &> /dev/null
+then
+        echo "installing waybackurls now "
+        go install github.com/tomnomnom/waybackurls@latest &> /dev/null
+        cp $HOME/go/bin/waybackurls /usr/local/bin
+        echo "waybackurls has been installed"
+
+    else
+        echo "waybackurls is already installed"
+fi
+
+    if ! command -v subzy &> /dev/null
+    then
+
+            go install -v github.com/LukaSikic/subzy@latest &> /dev/null
+            echo "installing subzy now "
+            sudo cp $HOME/go/bin/subzy /usr/local/bin
+            echo "subzy has been installed"
+            
+            
+
+    else
+        echo "subzy already installed"
+
+
+    fi
+if ! command -v asnmap -h &> /dev/null
+then
+        echo "installing asnmap now "
+        go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest &> /dev/null
+        echo "asnmap has been installed"
+
+    else
+        echo "asnmap is already installed"
+
+fi
+
+if ! command -v jsleak -h &> /dev/null
+then
+        echo "installing jsleak now "
+        go install github.com/channyein1337/jsleak@latest &> /dev/null
+        echo "jsleak has been installed"
+
+    else
+        echo "jsleak is already installed"
+
+fi
+
+
+if ! command -v mapcidr -h &> /dev/null
+then
+        echo "installing mapcidr now "
+        go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest &> /dev/null
+        echo "mapcidr has been installed"
+
+    else
+        echo "mapcidr is already installed"
+
+fi
+
+if ! command -v dnsx &> /dev/null
+then
+        echo "installing dnsx now "
+        go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest &> /dev/null
+        sudo cp $HOME/go/bin/dnsx /usr/local/bin
+        echo "dnsx has been installed"
+
+    else
+        echo "dnsx is already installed"
+
+fi
+if ! command -v gospider &> /dev/null
+then
+
+        echo "installing gospider now "
+        go install github.com/jaeles-project/gospider@latest &> /dev/null
+        sudo cp $HOME/go/bin/gospider /usr/local/bin
+         echo "gospider has been installed"
+     
+
+    else
+        echo "gospider is  already installed"
+    fi
+     if ! command -v wpscan &> /dev/null
+then
+
+        echo "installing wpscan now "
+        gem install wpscan &> /dev/null
+        if command -v wpscan -h
+        then
+         echo "wpscan has been installed"
+        fi
+        
+
+    else
+        echo "wpscan already installed"
+
+
+fi
+    if ! command -v CRLFuzz &> /dev/null
+then
+        echo "installing CRLFuzz now "
+        go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest &> /dev/null
+        sudo cp $HOME/go/bin/crlfuzz /usr/local/bin
+        
+ #CRLFuzz
+    else
+        echo " CRLFuzz has been installed"
+    fi
+
+
+        echo "installing dontgo403 now "
+        git clone https://github.com/devploit/dontgo403 &> /dev/null
+        cd dontgo403 
+         go get &> /dev/null
+         go build &> /dev/null
+         echo " Try ./dontgo403 -h to run "
+         cd - &> /dev/null
+        
+
+ if ! command -v katana -h &> /dev/null
+then
+ 
+        echo "installing katana now "
+        go install github.com/projectdiscovery/katana/cmd/katana@latest &> /dev/null
+        sudo cp $HOME/go/bin/katana /usr/local/bin
+        echo "Katana has been installed"
+        
+        
+
+    else
+        echo "katana is already  installed"
+    fi
+
+
+     if ! command -v uncover &> /dev/null
+then
+
+        echo "installing uncover now "
+        go install -v github.com/projectdiscovery/uncover/cmd/uncover@latest &> /dev/null
+        sudo cp $HOME/go/bin/uncover /usr/local/bin
+        echo "uncover has been installed"
+
+        
+        
+    else
+        echo "uncover is already  installed"
+    fi
+if ! command -v dalfox &> /dev/null
+then
+ 
+        echo "installing Dalfox now "
+        go install github.com/hahwul/dalfox/v2@latest &> /dev/null
+        cp $HOME/go/bin/dalfox /usr/local/bin
+        echo "dalfox has been installed"
+        
+    else
+        echo "dalfox is already installed"
+
+
+fi
+
+if ! command -v GoLinkFinder &> /dev/null
+then
+        
+        echo "installing GoLinkFinder now "
+        go install github.com/0xsha/GoLinkFinder@latest &> /dev/null
+        cp $HOME/go/bin/GoLinkFinder /usr/local/bin
+        echo "GoLinkFinder has been installed"
+        
+
+    else
+        echo "GoLinkFinder is already installed"
+
+fi
+ if ! command -v hakrawler &> /dev/null
+     then 
+    echo "installing hakrawler now "
+
+     go install github.com/hakluke/hakrawler@latest &> /dev/null
+     cp $HOME/go/bin/hakrawler /usr/local/bin
+     echo "Hakrawler has been installed"
+     
+     
+     else 
+             echo "hakrawler is already installed"
+
+  fi
+     
+ if ! command -v csprecon &> /dev/null
+    then
+    echo "installing csprecon now "
+
+     go install github.com/edoardottt/csprecon/cmd/csprecon@latest &> /dev/null
+     echo "csprecon has been installed"
+     
+
+    else
+        echo "csprecon is already installed"
+
+fi
+
+if ! command -v gotator &> /dev/null
+    then
+    echo "installing gotator now "
+
+    `go env -w GO111MODULE="auto"`
+    go install github.com/Josue87/gotator@latest &> /dev/null
+    echo "gotator has been installed"
+
+    else
+        echo "gotator is already installed"
+
+fi
+if ! command -v osmedeus &> /dev/null
+    then
+    echo "installing osmedeus now "
+
+    go install -v github.com/j3ssie/osmedeus@latest &> /dev/null
+    echo "osmedeus has been installed"
+     
+
+    else
+        echo "osmedeus is already installed"
+
+fi
+
+if ! command -v shuffledns &> /dev/null
+    then
+    echo "Installing shuffledns Now"
+     go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest  &> /dev/null
+     echo "shuffledns has been installed"
+     
+
+    else
+        echo "shuffledns is already installed"
+
+fi
+
+if ! command -v socialhunter -h &> /dev/null
+    then
+
+     go install github.com/utkusen/socialhunter@latest &> /dev/null
+     echo "socialhunter has been installed"
+     
+
+    else
+        echo "socialhunter is already installed"
+
+fi
+
+if ! command -v getJS &> /dev/null
+    then
+    echo "installing getJS"
+    go install github.com/003random/getJS@latest &> /dev/null
+    echo "getJS has been installed"
+    else
+        echo "getJS is already installed"
+fi
+
+
+
+
+
+Figlet "Python Implement"; echo 
+
+echo "export PATH=\$PATH:$(which python3)" >> ~/.bashrc     # Add python3 to .bashrc path to allow execution of python scripts without python3 reference
+
+echo "Time to install some python Tools"
+sleep 3s
+
+      echo -e "installing knockpy"
+     git clone https://github.com/guelfoweb/knock.git &> /dev/null
+     cd knock || exit
+     pip3 install -r requirements.txt &> /dev/null
+     cd - || exit
+     
+    read -p "Do You want install XSStrike (Y/n) " choice 
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y )
+     echo -e "installing XSStrike"
+     git clone https://github.com/s0md3v/XSStrike &> /dev/null
+     cd XSStrike || exit
+     pip3 install -r requirements.txt
+     echo -e "XSStrike has been installed"
+           ;;
+        esac
+     cd - &> /dev/null || exit
+  
+    read -p "Do You want install Logsensor (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+     echo -e "installing Logsensor"
+     git clone https://github.com/Mr-Robert0/Logsensor.git &> /dev/null
+    cd Logsensor || exit
+    chmod +x logsensor.py
+    chmod +x install.sh
+    pip install -r requirements.txt
+    ./install.sh &> /dev/null
+    echo "Logsensor has been installed"
+          ;;
+        esac
+    cd - &> /dev/null || exit
+     
+ read -p "Do You want install Altdns (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+     echo -e "installing Altdns"
+      git clone https://github.com/infosec-au/altdns.git &> /dev/null
+        cd altdns || exit
+        pip3 install -r requirements.txt
+        echo "Altdns has been installed"
+        echo "to run try python3 altdns --help"
+              ;;
+        esac
+        cd - &> /dev/null || exit
+
+     
+     
+     read -p "Do You want install xnLinkFinder (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git  &> /dev/null
+    cd xnLinkFinder || exit
+    python3 setup.py install
+        echo "xnLinkFinder has been installed"
+        ;;
+        esac
+        cd - || exit
+    
+      read -p "Do You want install ParamSpider (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y )
+    git clone https://github.com/devanshbatham/ParamSpider &> /dev/null
+    cd ParamSpider || exit
+    pip3 install -r requirements.txt
+        echo "ParamSpider has been installed"
+        echo "To use try python3 paramspider.py --domain target.com"
+           ;;
+        esac
+        cd - &> /dev/null || exit
+     
+     read -p "Do You want install NoSQLMap (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y |Y )
+    git clone https://github.com/codingo/NoSQLMap.git &> /dev/null
+    cd NoSQLMap || exit
+    python3 setup.py install /dev/null
+
+        echo "NoSQLMap has been installed"
+              ;;
+        esac
+        cd - &> /dev/null || exit
+     
+
+     
+
+  read -p "Do You want install chameleon (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    curl -sL https://raw.githubusercontent.com/iustin24/chameleon/master/install.sh | bash
+
+        echo "Chameleon has been installed"
+             ;;
+        esac
+        cd - || exit
+     
+     
+
+ read -p "Do You want install GraphQLmap (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/swisskyrepo/GraphQLmap
+    cd GraphQLmap/ || exit
+    python3 setup.py install
+        echo "GraphQLmap has been installed"
+            ;;
+        esac
+        cd - || exit
+     
+
+ read -p "Do You want install WhatWeb (Y/n) " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+     git clone https://github.com/urbanadventurer/WhatWeb.git
+    cd WhatWeb/ || exit
+    gem install bundler
+    bundle update
+    bundle install
+    echo "WhatWeb has been installed"
+         ;;
+        esac
+    cd - || exit
+     
+
+read -p "Do You want install http request smuggling (Y/n) : " choice
+     case $choice in
+     no | No | NO | n | N)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/anshumanpattnaik/http-request-smuggling.git
+    cd http-request-smuggling || exit
+    pip3 install -r requirements.txt
+    echo "http request smuggling has been installed"
+          ;;
+        esac
+    cd - || exit
+    
+     
+
+
+read -p "Do You want install keyfinder (Y/n) : " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/momenbasel/keyFinder.git keyFinder
+    cd keyFinder || exit
+    echo "keyfinder has been installed"
+          ;;
+        esac
+    cd - || exit
+
+
+    read -p "Do You want install goisnt (Y/n) : " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone git clone https://github.com/Nhoya/gOSINT goisnt
+    cd goisnt || exit
+    echo "goisnt has been installed"
+          ;;
+        esac
+    cd - || exit
+    
+$ git clone https://github.com/Josue87/MetaFinder.git  
+$ cd MetaFinder
+$ pip3 install -r requirements.txt 
+$ echo "python3 metafinder.py -t domain.com -l 20 [-v]"
+
+$ git clone https://github.com/devanshbatham/ParamSpider
+$ cd ParamSpider
+$ pip3 install -r requirements.txt
+$ python3 paramspider.py –domain hackerone.com
+
+read -p "Do You want install JWT_TOOL (Y/n) : " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/ticarpi/jwt_tool
+    cd jwt_tool || exit
+    python3 -m pip install termcolor cprint pycryptodomex requests
+    chmod +x jwt_tool.py
+    echo "JWT_TOOL has been installed"
+          ;;
+        esac
+    cd - || exit
+    
+
+
+read -p "Do You want install Arjun (Y/n) : " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/s0md3v/Arjun
+    cd Arjun || exit
+    python3 setup.py install    
+    echo "Arjun has been installed"
+          ;;
+        esac
+    cd - || exit
+    
+     
+read -p "Do You want install Gitleaks (Y/n) : " choice
+     case $choice in
+     no | No | NO | n)
+     ;;
+     yes| YES | Yes | y | Y)
+    git clone https://github.com/zricethezav/gitleaks.git 
+    cd gitleaks || exit
+    make build
+    mv gitleaks /usr/local/bin
+          ;;
+        esac
+    cd - || exit
+       
+     echo "End Install Of Optional Tools";
+}
+
+
+
+function mainsystem() {
+  echo "IMPLEMENTING OMNISCIENT MAIN SYSTEM INFRASTRUCTURE"; echo; cd /opt;
+  go install github.com/graniet/operative-framework@latest; echo "Go:> Operative_Framework..."
+
+  git clone https://github.com/syamsv/Pyosint.git
+    cd PyOsint
+  pip3 install -r requirements.txt
+
+  git clone https://github.com/thewhiteh4t/FinalRecon.git
+  git clone git clone https://github.com/Datalux/Osintgram.git
+
+    cd Osintgram;
+
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+
+
+git clone https://github.com/JeremyEngram/PySleuth.git /opt && cd PySlueth; pager README*
+
+python main.py
+
+echo "
+
+        cd /opt/Osintgram
+        Open the credentials.ini file in the config folder and write your Instagram account username and password in the corresponding fields
+
+        Alternatively, you can run the make setup command to populate this file for you.
+
+        Run the main.py script in one of two ways
+
+        As an interactive prompt python3 main.py <target username>
+        Or execute your command straight away python3 main.py <target username> --command <command>"
+    
+}
+
+
+function virtualmachines() {
+    
+    # CommandoVM
+    
+    echo "Windows Environment Threat Persuit" && echo "Implement On Windows machine or ssh into the following to automate implementation..."
+    git clone https://github.com/JeremyEngram/ThreatPursuit-VM.git
+
+    docker build -t tlvm .
+    docker run --privileged -v $(pwd)/data:/data tlvm
+
+}
+
+function omnilog() {
+    # Implemntation of working HOMEDIR LOGGING SYSTEM AUTOMATED BY SYSLOG RULES AND LOCALLY HOSTED LLM AI API 
+}
+
+
+### CALL IMPLEMENTATION FUNCTIONS  ###
+    
+ echo "RUNNING IMPLEMENTATION BOOTSTRAP..."; ECHO 
+
+     requirements
+     python_backends
+     opt_warning
+     install_php                # PHP Promper Implementation 8.0+ FHM - php based scrip[ts will not display prooerly without
+     lamp_implementation        # Apache LAmP Implement Requirements
+     frameworks
+     mainsystem                 # OSINT Based mainsystem tools
+     optional_tools
+     agents_infrastructure
+     # virtualmachines
+     omnilog 
+     
+     #background_requirements?
+
+echo "DONE!" | echo "Continuing Implementation..."
+
+#########################################################################################
+
+
+
+#TEST THIS BEFORE RUNNING!!!
+function executebackground() {
+    echo "Execute All Scripts In Directory And Push Them To The Background";
+
+    for script in dir/*.sh
+do
+    nohup bash "$script" &
+done
+for script in /usr/local/bin/*; do
+    # Check if the item is a file and executable
+    if [ -f "$script" ] && [ -x "$script" ]; then
+        # Execute the script
+        "$script"
+    fi
+done
+}
+
+
+
+function arm_scripts() {
+    # Define an array of directories to check for scripts
+    script_directories=(
+        "/usr/local/bin"
+        "/home/$USER/.bin"
+        "/home/$USER/bin"
+    )
+
+    for dir in "${script_directories[@]}"; do
+        echo "Processing scripts in $dir..."
+        
+        # List all files in the script directory
+        for script in "$dir"/*; do
+            if [ -f "$script" ]; then
+                # Check if the file is executable
+                if [ -x "$script" ]; then
+                    # Execute the script
+                    "$script"
+                else
+                    # Make the script executable
+                    chmod +x "$script"
+                    echo "Made $script executable."
+                fi
+            fi
+        done
+    done
+}
+
+echo "Hardcoded System Sub-Automation Scripts Armed"
+
+
+
+
+function andriller_install() {
+    # Uninstall Andriller
+uninstall_andriller() {
+  echo "Uninstalling Andriller"
+  pip uninstall -y andriller
+}
+
+# Reinstall Andriller
+reinstall_andriller() {
+  echo "Reinstalling Andriller Function"
+  pip install andriller -U
+  pip install tkinter
+  echo "Implementing Andriller GUI Git Repo"
+  python3 -m venv env
+  source env/bin/activate
+  sudo apt-get install android-tools-adb python3-tk
+  git clone https://github.com/den4uk/andriller.git /opt/andriller
+}
+
+# Run Andriller GUI
+run_andriller_gui() {
+  echo "Running Andriller GUI"
+  python3 -m andriller
+}
+
+# Main script logic
+uninstall_andriller
+reinstall_andriller
+run_andriller_gui
+
+}
+
+echo " Installed Andriller Mobile Forensics "
+
+
+function operations_requirements() {
+    # Function to install Python packages from requirements.txt
+    install_requirements() {
+        local dir="$1"
+
+        # Check if requirements.txt exists in the directory
+        if [ -f "$dir/requirements.txt" ]; then
+            echo "Installing Python packages in $dir..."
+            pip install -r "$dir/requirements.txt" --break-system-packages
+        else
+            echo "No requirements.txt found in $dir"
+        fi
+    }
+
+    # Function to create a virtual environment
+    create_virtualenv() {
+        local dir="$1"
+
+        # Check if a virtual environment already exists
+        if [ ! -d "$dir/venv" ]; then
+            echo "Creating a virtual environment in $dir..."
+            python3 -m venv "$dir/venv"
+        else
+            echo "Virtual environment already exists in $dir"
+        fi
+    }
+
+    # Iterate through all directories under /opt
+    for dir in /opt/*/; do
+        # Call the function to create a virtual environment in each directory
+        create_virtualenv "$dir"
+
+        # Call the function to install requirements in each directory
+        install_requirements "$dir"
+    done
+}
+
+
+
+echo "Started Custom Compiled OMNIscient Scripts";      # populate and add as drop in function
+
+git clone https://github.com/TermuxHackz/X-osint.git
+git clone https://github.com/piratemoo/cowbrow.git
+
+
+
+
+echo "Fully Implemnted Digital Forensics Operations"
+
+
+
+
+function webinterfaces_implement() {
+   
+# npm install requirements - list 
+
+   echo "Web-Interface Based OSINT Tools";
+   https://usersearch.org/ (automate with selenium)
+   https://whatsmyname.app/  (automate with selenium)
+   
+   echo "Web Interfaces OMNIscient Scripts";
+}
+
+
+####################################################################
+
+
+echo "EXECUTING ARSENAL INSTALLER"; echo 
+
+  operations_requirements
+      wait
+  arm_scripts
+      wait
+  scrapeframe
+      wait
+  andriller_install
+      wait
+  omnilog_implement
+      wait
+  executebackground
+      wait 
+  webinterfaces_implement
+
+
+
+echo "DONE INSTALLING ARSENAL For Omniscient INITIALIZATION!"; echo 
+
+echo "What Is Omniecient..."
+
+eacho "Features Of Omnisicent"
+
+echo "How to Access Omniscient"
+
+echo "Documentation On Omniscient"
+
+######################################################################

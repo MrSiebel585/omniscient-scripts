@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Function to clone a git repository
+clone_repo() {
+  read -p "Enter the Git repository URL: " repo_url
+  git clone "$repo_url"
+  repo_name=$(basename "$repo_url" .git)
+  cd "$repo_name" || exit
+}
+
+# Function to check and install requirements.txt
+check_and_install_requirements() {
+  if [ -f "requirements.txt" ]; then
+    echo "requirements.txt found. Setting up virtual environment..."
+    python3 -m venv "$repo_name-venv"
+    source "$repo_name-venv/bin/activate"
+    pip install -r requirements.txt
+    echo "Dependencies from requirements.txt installed."
+  else
+    echo "requirements.txt not found."
+  fi
+}
+
+# Function to install package if setup.py exists
+install_package() {
+  if [ -f "setup.py" ]; then
+    python3 setup.py install
+    echo "Package installed using setup.py."
+  else
+    echo "setup.py not found."
+  fi
+}
+
+# Function to execute the main python script and log output
+execute_main_script() {
+  main_script="${repo_name}.py"
+  if [ -f "$main_script" ]; then
+    local log_file="${repo_name}_execution.log"
+    python3 "$main_script" > "$log_file" 2>&1
+    echo "Executed $main_script, output logged to $log_file."
+  else
+    echo "Main script $main_script not found."
+  fi
+}
+
+# Main function to orchestrate the script execution
+main() {
+  clone_repo
+  check_and_install_requirements
+  install_package
+  execute_main_script
+}
+
+# Call the main function to start the script
+main

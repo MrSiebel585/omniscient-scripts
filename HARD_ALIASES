@@ -1,0 +1,10 @@
+
+
+echo "Profile Framework Directories"
+
+find /opt/omniscient -maxdepth 1 -type d
+find /opt/omniscient/llm -maxdepth 1 -type d
+find /opt/omniscient/omni_hub -maxdepth 1 -type d
+find /opt/omniscient/menus -maxdepth 1 -type d
+find /opt/omniscient/malformed -maxdepth 1 -type d
+find /opt/omniscient/scrapeframe -maxdepth 1 -type d

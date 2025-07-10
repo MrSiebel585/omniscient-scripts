@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Create USer And Grant Access To All Databases";
+read -p "User:> " user
+read -p "Password:> " pass
+mysql -u root -p -e "CREATE USER '$user'@'localhost' IDENTIFIED BY '$pass'; GRANT ALL PRIVILEGES ON *.* TO '$user'@'localhost'; FLUSH PRIVILEGES;"
