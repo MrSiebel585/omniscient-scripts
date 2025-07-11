@@ -1,0 +1,121 @@
+#!/bin/bash
+
+#On-Screen Realtime Report Generation Of Startup Boot Issues
+
+# Define the log file path
+LOG_FILE="/tmp/startup_repair_report_$(date +'%Y-%m-%d_%H-%M-%S').log"
+
+# Function to log output to both terminal and log file
+log_output() {
+    echo "$1"
+    echo "$1" >> "$LOG_FILE"
+}
+
+# Start log report
+log_output "--------------------------------------------------------"
+log_output "Startup Issue Diagnosis and Repair Report"
+log_output "Report generated on: $(date)"
+log_output "--------------------------------------------------------"
+log_output ""
+
+# Step 1: Check the status of redis-server and gdm3
+log_output "Checking status of redis-server..."
+redis_status=$(systemctl is-active redis-server)
+log_output "redis-server status: $redis_status"
+
+log_output "Checking status of gdm3..."
+gdm3_status=$(systemctl is-active gdm3)
+log_output "gdm3 status: $gdm3_status"
+log_output ""
+
+# Step 2: Inspect journal logs for redis-server and gdm3
+log_output "Checking logs for redis-server..."
+redis_logs=$(journalctl -u redis-server --since "1 hour ago" | tail -n 20)
+log_output "$redis_logs"
+
+log_output "Checking logs for gdm3..."
+gdm3_logs=$(journalctl -u gdm3 --since "1 hour ago" | tail -n 20)
+log_output "$gdm3_logs"
+log_output ""
+
+# Step 3: Check for any failed services
+log_output "Checking for failed system services..."
+failed_services=$(systemctl --failed)
+log_output "$failed_services"
+log_output ""
+
+# Step 4: Attempt to repair common issues with redis-server
+if [[ "$redis_status" == "inactive" || "$redis_status" == "failed" ]]; then
+    log_output "Attempting to restart redis-server..."
+    sudo systemctl restart redis-server
+    redis_status=$(systemctl is-active redis-server)
+    log_output "redis-server status after restart: $redis_status"
+    
+    # Check if restart fixed the issue
+    if [[ "$redis_status" == "active" ]]; then
+        log_output "Successfully restarted redis-server."
+    else
+        log_output "Failed to restart redis-server. Attempting reinstallation..."
+        sudo apt-get install --reinstall redis-server -y
+        log_output "Reinstallation completed. Checking status again..."
+        redis_status=$(systemctl is-active redis-server)
+        if [[ "$redis_status" == "active" ]]; then
+            log_output "redis-server successfully reinstalled and started."
+        else
+            log_output "Failed to repair redis-server. Further manual intervention required."
+        fi
+    fi
+else
+    log_output "redis-server is active and running."
+fi
+log_output ""
+
+# Step 5: Attempt to repair common issues with gdm3
+if [[ "$gdm3_status" == "inactive" || "$gdm3_status" == "failed" ]]; then
+    log_output "Attempting to restart gdm3..."
+    sudo systemctl restart gdm3
+    gdm3_status=$(systemctl is-active gdm3)
+    log_output "gdm3 status after restart: $gdm3_status"
+    
+    # Check if restart fixed the issue
+    if [[ "$gdm3_status" == "active" ]]; then
+        log_output "Successfully restarted gdm3."
+    else
+        log_output "Failed to restart gdm3. Attempting reinstallation..."
+        sudo apt-get install --reinstall gdm3 -y
+        log_output "Reinstallation completed. Checking status again..."
+        gdm3_status=$(systemctl is-active gdm3)
+        if [[ "$gdm3_status" == "active" ]]; then
+            log_output "gdm3 successfully reinstalled and started."
+        else
+            log_output "Failed to repair gdm3. Further manual intervention required."
+        fi
+    fi
+else
+    log_output "gdm3 is active and running."
+fi
+log_output ""
+
+# Step 6: Check disk usage and filesystem health
+log_output "Checking disk usage..."
+disk_usage=$(df -h)
+log_output "$disk_usage"
+
+log_output "Checking filesystem for errors..."
+sudo fsck -Af
+log_output "Filesystem check completed."
+log_output ""
+
+# Step 7: Check for any package issues
+log_output "Checking for broken packages..."
+package_issues=$(sudo apt-get check)
+log_output "$package_issues"
+
+# Step 8: Reboot system (optional for applying fixes)
+log_output "System diagnostic and repair complete. Rebooting the system..."
+# sudo reboot
+
+# End log report
+log_output "--------------------------------------------------------"
+log_output "End of Report"
+log_output "--------------------------------------------------------"
